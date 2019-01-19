@@ -164,3 +164,29 @@ class TestCar(unittest.TestCase):
             assumed_power_output,
             "Actual car power output did not match assumed power output."
         )
+
+
+class TestRoad(unittest.TestCase):
+    """
+    Tests to assess the performance of a road.
+    """
+
+    def test_implementation_of_flat_road(self):
+        """
+        Test to instantiate a road.
+        Returns:
+        """
+        self.road = world.FlatRoad()
+
+    def test_angle_of_flat_road(self):
+        """
+        Test to ensure the flat road is indeed flat.
+        Returns:
+        """
+        self.flatroad = world.FlatRoad()
+        self.assertAlmostEqual(
+            self.flatroad.angle(0),
+            0,
+            msg="Road is indeed flat."
+        )
+

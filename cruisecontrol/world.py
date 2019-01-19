@@ -93,3 +93,38 @@ class Car(WorldObject):
     @property
     def power_output(self):
         return self.min_power + self.accelerator_pos * (self.max_power - self.min_power)
+
+
+class Road(abc.ABC):
+    """
+    Interface class to hold the standard interactions of a road..
+    """
+
+    @abc.abstractmethod
+    def angle(self, x):
+        """
+        Get the current angle of the road at a given horizontal displacement.
+        Args:
+            x: Horizontal displacement (metres)
+
+        Returns:
+            theta: angle of the road (degrees from horizontal)
+        """
+        pass
+
+
+class FlatRoad(Road):
+    """
+    Implementation of a perfectly flat road.(Road):
+    """
+
+    def angle(self, x):
+        """
+        What is the angle of the road at displacement 'x' metres?
+        Args:
+            x: Displacement from origin, in metres.
+
+        Returns:
+            theta: angle of the road (degrees from horizontal)
+        """
+        return 0.0
