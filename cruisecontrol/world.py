@@ -88,7 +88,21 @@ class Car(WorldObject):
         self.environment = environment
 
     def tick(self, tick_length):
-        pass
+        new_velocity = None
+        new_acceleration = None
+        new_horizontal_displacement = None
+
+    def _generate_new_velocity(self, tick_length):
+        """
+        Create velocity for next tick.
+        Args:
+            tick_length: Length of time over which velocity is calculated.
+
+        Returns:
+            Calculated velocity (m/s)
+        """
+        new_velocity = self.acceleration * tick_length
+        return new_velocity
 
     @property
     def power_output(self):
@@ -115,7 +129,7 @@ class Road(abc.ABC):
 
 class FlatRoad(Road):
     """
-    Implementation of a perfectly flat road.(Road):
+    Implementation of a perfectly flat road.
     """
 
     def angle(self, x):
@@ -128,3 +142,26 @@ class FlatRoad(Road):
             theta: angle of the road (degrees from horizontal)
         """
         return 0.0
+
+
+class AngleRoad(Road):
+    """
+    Implementation of an angled road.
+    """
+
+    def __init__(self, theta):
+        """
+        Define the angle by which the road is angled.
+        """
+        self.theta = theta
+
+    def angle(self, x):
+        """
+        Return the angle of the road at displace x metres.
+        Args:
+            x: Displacement from origin, metres.
+
+        Returns:
+            theta: angle of the road (degrees from horizontal)
+        """
+        return self.theta

@@ -190,3 +190,79 @@ class TestRoad(unittest.TestCase):
             msg="Road is indeed flat."
         )
 
+    def test_angle_of_angled_road(self):
+        """
+        Test to ensure that the angled road is constantly angled.
+        Returns:
+        """
+        theta = 45.
+        self.angled_road = world.AngleRoad(theta)
+        self.assertAlmostEqual(
+            self.angled_road.angle(0),
+            theta,
+            msg="Road is at expected angle."
+        )
+
+
+class TestCarScenarios(unittest.TestCase):
+    """
+    Test some scenarios for the car class.
+    """
+    def setUp(self):
+        self.flat_road = world.FlatRoad()
+
+    def test_simulate_car_without_power(self):
+        """
+        Get the car moving on a flat road with no power and it should come to a halt.
+        Returns:
+        """
+        self.car = world.Car(
+            environment=self.flat_road,
+            velocity=10.  # 10 m/s - about 36 km/hr
+        )
+
+        car_has_stopped = False
+        for i in range(10000):
+            self.car.tick(tick_length=0.001)
+            if self.car.velocity < 0.001:
+                car_has_stopped = True
+                break
+
+        self.assertEqual(
+            car_has_stopped,
+            True,
+            "Car did not stop as expected."
+        )
+
+
+class TestCar(unittest.TestCase):
+    """
+    Tests around the Car class.
+    """
+    def setUp(self):
+        """
+        Create some useful variables for creating a car.
+        Returns:
+        """
+        self.flat_road = world.FlatRoad()
+
+    def test_create_car(self):
+        """
+        Test that we can instantiate a car.
+        Returns:
+        """
+        self.car = world.Car(
+            environment=self.flat_road
+        )
+
+    def test_new_velocity(self):
+        """
+        Test that the velocity changes as expected.
+        Returns:
+
+        """
+        self.car = world.Car(
+            environment=self.flat_road,
+            acceleration=1,
+            velocity=1.,
+        )
